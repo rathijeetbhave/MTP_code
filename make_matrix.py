@@ -49,13 +49,13 @@ def some_name(alpha,max_count):
 
                 elif row[3] == char:
                     if (row[0],elem) in list_alpha:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 20*alf*(len(aoe_comm_list[int(char)-1])-1):
+                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 100*alf*(len(aoe_comm_list[int(char)-1])-1):
                             for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 20*alf*(len(aoe_comm_list[int(char)-1])-1)
+                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 100*alf*(len(aoe_comm_list[int(char)-1])-1)
                     else:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 20*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
+                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 100*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
                             for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 20*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
+                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 100*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
 
 
     #for row in matrix:
