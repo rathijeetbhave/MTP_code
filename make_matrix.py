@@ -24,38 +24,51 @@ def some_name(alpha,max_count):
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     matrix = [[1]*max_count*len(aoe_comm_dict) for _ in range(max_count*len(aoe_comm_dict))]
     aoe_comm_list = get_aoe_comm_list()
+    k=[100,200,300]
     for row in get_stud_row():
         for char in row[1:]:
             for elem in aoe_comm_list[int(char)-1][1:]:
-                if row[1] == char:
-                    if (row[0],elem) in list_alpha:
-                        if  matrix[int(row[0])-1][(int(elem)-1)*max_count] < 300*alf*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count + i] = 300*alf*(len(aoe_comm_list[int(char)-1])-1)
-                    else:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 300*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 300*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
+                for i in range(1,4):
+                    if row[i] == char :
+                        if (row[0],elem) in list_alpha:
+                            if  matrix[int(row[0])-1][(int(elem)-1)*max_count] < k[i-1]*alf*(len(aoe_comm_list[int(char)-1])-1):
+                                for j in range(max_count):
+                                    matrix[int(row[0])-1][(int(elem)-1)*max_count + j] = k[i-1]*alf*(len(aoe_comm_list[int(char)-1])-1)
+                        else:
+                            if matrix[int(row[0])-1][(int(elem)-1)*max_count] < k[i-1]*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
+                                for j in range(max_count):
+                                    matrix[int(row[0])-1][(int(elem)-1)*max_count + j] = k[i-1]*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
 
-                elif row[2] == char:
-                    if (row[0],elem) in list_alpha:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 200*alf*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 200*alf*(len(aoe_comm_list[int(char)-1])-1)
-                    else:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 200*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 200*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
 
-                elif row[3] == char:
-                    if (row[0],elem) in list_alpha:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 20*alf*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 20*alf*(len(aoe_comm_list[int(char)-1])-1)
-                    else:
-                        if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 20*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
-                            for i in range(max_count):
-                                matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 20*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
+                #if row[1] == char:
+                    #if (row[0],elem) in list_alpha:
+                        #if  matrix[int(row[0])-1][(int(elem)-1)*max_count] < 300*alf*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count + i] = 300*alf*(len(aoe_comm_list[int(char)-1])-1)
+                    #else:
+                        #if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 300*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 300*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
+#
+                #elif row[2] == char:
+                    #if (row[0],elem) in list_alpha:
+                        #if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 200*alf*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 200*alf*(len(aoe_comm_list[int(char)-1])-1)
+                    #else:
+                        #if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 200*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 200*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
+#
+                #elif row[3] == char:
+                    #if (row[0],elem) in list_alpha:
+                        #if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 100*alf*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 100*alf*(len(aoe_comm_list[int(char)-1])-1)
+                    #else:
+                        #if matrix[int(row[0])-1][(int(elem)-1)*max_count] < 100*(10-alf)*(len(aoe_comm_list[int(char)-1])-1):
+                            #for i in range(max_count):
+                                #matrix[int(row[0])-1][(int(elem)-1)*max_count+i] = 100*(10-alf)*(len(aoe_comm_list[int(char)-1])-1)
 
 
     #for row in matrix:
