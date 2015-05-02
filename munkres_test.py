@@ -16,13 +16,13 @@ def munkres_test(alpha,max_count,gamma):
                 cost_row += [sys.maxsize - col]
         cost_matrix += [cost_row]
     indexes=m.compute(cost_matrix)
-    print indexes
+    #print indexes
 
     #for row,tuples in itertools.izip(make_matrix.get_stud_row(),indexes):
         ##print row,tuples
         #print row.index(tuples[
         
-    #print_matrix(matrix, msg='Lowest cost through this matrix:')
+    print_matrix(matrix, msg='Lowest cost through this matrix:')
     total = 0
     for row, column in indexes:
             value = matrix[row][column]

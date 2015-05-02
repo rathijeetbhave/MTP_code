@@ -2,7 +2,7 @@ import csv
 import itertools
 import sys
 def get_stud_row():
-    with open('stud_aoi_real.csv','r') as f:
+    with open('stud_aoi_real_1.csv','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for row in output:
             yield row
@@ -72,7 +72,7 @@ def segregate_edges():
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     list_alpha = []
     list_one_minus_alpha = []
-    with open('stud_aoi_real.csv','r') as f:
+    with open('stud_aoi_real_1.csv','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for row in output:
             for num in row[1:]:
