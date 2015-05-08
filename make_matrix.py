@@ -1,8 +1,28 @@
 import csv
 import itertools
 import sys
+#class student:
+    #def __init__(self,s_no,name,marks,pref):
+	#self.marks=marks
+	#self.name=name
+	#self.pref=pref
+	#self.s_no = s_no
+#
+#def create_stud_database():
+    #stud_list = []
+    #with open('stud_and_marks.csv','r') as f:
+        #output = csv.reader(f,delimiter = ',')
+        #for i,row in enumerate(output):
+		#stud_list.append(student(i,row[0],row[1],row[2:]))
+    ##for stud in stud_list:
+	    ##print stud.marks,stud.name,stud.pref,stud.s_no+1
+        #stud_list.sort(key = lambda student:student.marks)
+
+	
+
+					    
 def get_stud_row():
-    with open('stud_aoi_real.csv','r') as f:
+    with open('stud_aoi_real.csv.bkup','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for row in output:
             yield row
@@ -26,14 +46,14 @@ def some_name(alpha,max_count,gamma):
     print alf,max_count,gamma
     #max_count = 4
     no_of_committees = 15
-    no_of_students = 150
+    no_of_students = 149
     list_alpha,list_one_minus_alpha = segregate_edges()
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     #print len(aoe_comm_dict)
     #matrix = [[1]*max_count*len(aoe_comm_dict) for _ in range(max_count*len(aoe_comm_dict))]
     matrix = [[1]*no_of_committees*max_count for _ in range(no_of_students)]
     aoe_comm_list = get_aoe_comm_list()
-    #print aoe_comm_list
+    print aoe_comm_list
     #pref_graph=[300,200,100,50]
     pref_graph=[500,400,100,10]
     for row in get_stud_row():
@@ -41,6 +61,7 @@ def some_name(alpha,max_count,gamma):
         #test_graph = 1
         for aoe in row[1:]:
             index_in_comm_list = find_aoe_comm_index(aoe_comm_list,aoe)
+            print index_in_comm_list
             try:
                 for comm in aoe_comm_list[index_in_comm_list][1:]:
                     #print aoe,comm
@@ -53,14 +74,14 @@ def some_name(alpha,max_count,gamma):
                                     for j in range(max_count):
                                         matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = test_graph*pref_graph[i-1]*alf*(len(aoe_comm_list[index_in_comm_list])-1)
                                 break
-                            else:
+                            elif (row[0],aoe) in list_one_minus_alpha:                          
                                 if matrix[int(row[0])-1][(int(comm)-1)*max_count] < test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1):
                                     for j in range(max_count):
                                         matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1)
                                 break
-            except TypeError:
-                #print str(e)
-                pass
+            except TypeError,e:
+                print str(e)
+                #pass
 
 
 
@@ -92,7 +113,7 @@ def segregate_edges():
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     list_alpha = []
     list_one_minus_alpha = []
-    with open('stud_aoi_real.csv','r') as f:
+    with open('stud_aoi_real.csv.bkup','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for row in output:
             for num in row[1:]:
@@ -101,12 +122,14 @@ def segregate_edges():
                         list_one_minus_alpha.append((row[0],num))
                     else:
                         list_alpha.append((row[0],num))
-                except KeyError:
-                    #print str(e)
-                    pass
+                except KeyError,e:
+                    print str(e)
+                    #pass
     #print list_alpha
+    print list_alpha
+    print '\n'
+    print list_one_minus_alpha
     return (list_alpha,list_one_minus_alpha)
-    #print list_alpha,list_one_minus_alpha
     #print list_one_minus_alpha
 
 
@@ -122,10 +145,10 @@ def find_aoe_comm_index(aoe_comm_list,elem):
 
 
 def make_matrix():
-    some_name(alpha,max_count,gamma)
+    #some_name(alpha,max_count,gamma)
     #find_avg_outdegree()
     #segregate_edges()
-
+    create_stud_database()
 
 
     
