@@ -22,15 +22,40 @@ import sys
 
 					    
 def get_stud_row():
-    with open('stud_aoi_real.csv.bkup','r') as f:
-        output = csv.reader(f,delimiter = ' ')
+    """
+    Yield rows of student data one by one.
+    Each row contains the serial number of student along with his four preferances.
+
+    final_stud_file.csv : Comma seperated values with first column as serial number
+    and rest of the four columns containing the four preferances.
+    name of input file with student data.
+
+    :rtype: list
+    :return: one row of input file at a time.
+
+    """
+
+    with open('final_stud_file.csv','r') as f:
+        output = csv.reader(f,delimiter = ',')
         for row in output:
             yield row
 
 
 def get_aoe_comm_list():
+    """
+    Returns a list of lists with area/project of intrest as first element 
+    followed by all the committees that cover the specific area/project of intrest.
+
+    aoi_comm_new.csv : CSV file with first column as area/project of intrest and rest 
+    of columns as the committees that cover that area of intrest.
+
+    :rtype: list of lists
+    :return: list of lists of all area/project of intrest along with their committees.
+
+    """
+
     aoe_comm_list = []
-    with open('aoi_comm_real.csv','r') as f:
+    with open('aoi_comm_new.csv','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for line in output:
             aoe_comm_list.append(line)
@@ -40,20 +65,38 @@ def get_aoe_comm_list():
 
 #def some_name(alpha,max_count,gamma):
 def some_name(alpha,max_count,gamma):
+    """
+    Forms the matrix that acts like an input to munkres.py.
+    Returns a matrix in form of list of lists.
+
+    :Parameters:
+        alpha : Integer between 1-9
+            This value specifies how much importance is to be given to load balancing
+            and how much to be given to preferances of students. 
+            Value of one means maximum importance to load balencing while
+            value of 9 means maximum importance to student preferances.
+
+            **WARNING**: Code does not work for values other than between one to nine.
+
+        :rtype: list of lists
+        :return: A list of lists as a matrix to be used as 
+                 input for weight maximisation algorithm.
+
+    """
     #test_graph = 200 - gamma*int(row[0])
     alf = int(alpha)
     gamma = int(gamma) 
-    print alf,max_count,gamma
+    #print alf,max_count,gamma
     #max_count = 4
-    no_of_committees = 15
-    no_of_students = 149
+    no_of_committees = 20
+    no_of_students = 148
     list_alpha,list_one_minus_alpha = segregate_edges()
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     #print len(aoe_comm_dict)
     #matrix = [[1]*max_count*len(aoe_comm_dict) for _ in range(max_count*len(aoe_comm_dict))]
     matrix = [[1]*no_of_committees*max_count for _ in range(no_of_students)]
     aoe_comm_list = get_aoe_comm_list()
-    print aoe_comm_list
+    #print aoe_comm_list
     #pref_graph=[300,200,100,50]
     pref_graph=[500,400,100,10]
     for row in get_stud_row():
@@ -61,7 +104,7 @@ def some_name(alpha,max_count,gamma):
         #test_graph = 1
         for aoe in row[1:]:
             index_in_comm_list = find_aoe_comm_index(aoe_comm_list,aoe)
-            print index_in_comm_list
+            #print index_in_comm_list
             try:
                 for comm in aoe_comm_list[index_in_comm_list][1:]:
                     #print aoe,comm
@@ -80,8 +123,8 @@ def some_name(alpha,max_count,gamma):
                                         matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1)
                                 break
             except TypeError,e:
-                print str(e)
-                #pass
+                #print str(e)
+                pass
 
 
 
@@ -92,11 +135,24 @@ def some_name(alpha,max_count,gamma):
 
 
 def find_avg_outdegree():
+    """
+
+    Find the average outdegree of aoi_comm_new.csv file which indicates 
+    which areas/projects of intrest have maximun potential for load balencing.
+    It is also used to form a dictionary of area/project of intrest as keys and 
+    the number of committees covering that area/project as the corresponding values.
+
+    :rtype: Tuple
+    :return: A tuple with the dictionary as first element and 
+             average outdegree as other element.
+
+    """
+    
     out_degree = 0
     total_committees = 0
     aoe_comm_dict = {}
     _sum = 0
-    with open('aoi_comm_real.csv','r') as f:
+    with open('aoi_comm_new.csv','r') as f:
         output = csv.reader(f,delimiter = ' ')
         for row in output:
             aoe_comm_dict[row[0]] = int(len(row[1:]))
@@ -110,11 +166,25 @@ def find_avg_outdegree():
 
 
 def segregate_edges():
+
+    """
+
+    Finds which edges can be used to achieve more amount of load balencing. This is 
+    used to assign more weights to those edges with more potential to do load balencing. 
+    Segregation is based on outdegree of the area of intrest which 
+    are given as student preferances.
+
+    :rtype: Tuple
+    :return: A tuple with all preferances of students divided in two lists. 
+             These two lists form the tuple.
+
+    """
+
     aoe_comm_dict,avg_outdegree = find_avg_outdegree()
     list_alpha = []
     list_one_minus_alpha = []
-    with open('stud_aoi_real.csv.bkup','r') as f:
-        output = csv.reader(f,delimiter = ' ')
+    with open('final_stud_file.csv','r') as f:
+        output = csv.reader(f,delimiter = ',')
         for row in output:
             for num in row[1:]:
                 try:
@@ -123,25 +193,30 @@ def segregate_edges():
                     else:
                         list_alpha.append((row[0],num))
                 except KeyError,e:
-                    print str(e)
+                    #print str(e)
+		    pass
                     #pass
     #print list_alpha
-    print list_alpha
+    #print list_alpha
     print '\n'
-    print list_one_minus_alpha
+    #print list_one_minus_alpha
     return (list_alpha,list_one_minus_alpha)
     #print list_one_minus_alpha
 
 
 def find_aoe_comm_index(aoe_comm_list,elem):
+    """
+    Used to find the index of a specific area/project of intrest in the list of lists 
+    of area/project of intrest and committees file.
+
+    :rtype: Integer
+    :return: The index of area/project of intrest in given list of lists.
+
+    """
+
     for i,lst in enumerate(aoe_comm_list):
         if elem == lst[0]:
             return i
-
-
-
-
-
 
 
 def make_matrix():
@@ -149,10 +224,6 @@ def make_matrix():
     #find_avg_outdegree()
     #segregate_edges()
     create_stud_database()
-
-
-    
-
 
 
 if __name__ == '__main__':

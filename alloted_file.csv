@@ -1,0 +1,26 @@
+You chose alpha = 3 (more alpha value means higher student preference importance (at the
+cost of more imbalance in committee loads. Choose *lower* (but positive) alpha value if balancing is priority.)
+
+8 is the (hard constraing) maximum per committee
+
+1 is the gamma value: gamma has to be 1 or more: higher value means more importance 
+   test performance when allotting
+
+Number of committees (being read from csv file...): 20
+Number of students (being read from csv file...): 148
+
+Building weights matrix: rows = 148 and columns 160
+
+Total number of students allotted *some* committee =  148 - 19
+Number students getting 3rd or worse choices = 2
+
+Number of students not allotted any committee = 19
+
+{committee 1: 8, 
+ committee 2: 1, 
+ 3: 8, 4: 8, 5: 8, 6: 8, 7: 8, 8: 0, 9: 8, 10: 8, 11: 8, 12: 4, 13: 8, 14: 8, 15: 7, 16: 5, 17: 8, 18: 8, 19: 8, 20: 0}
+
+A full report (with student-committee wise breakup) can be found in filename.csv
+
+
+
