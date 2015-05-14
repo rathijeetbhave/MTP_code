@@ -1,3 +1,76 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-1 -*-
+
+# Documentation is intended to be processed by Epydoc.
+
+"""
+Introduction
+============
+This file is used to make the input matrix for the munkres algorithm.
+It is like a helper file for munkres_test.py file
+
+Description
+===========
+
+The input file with student information is read and each line in file is *yielded*.
+The area/project to committee file is read and stored in form of list in aoe_comm_list.
+The *some_name* function takes three parameters as input. *Alpha* for load balencing, *gamma*
+for test performance and *pref_graph* which signifies how fast the importance of student 
+preferances decreases. Pref_graph is hard coded in algorithm in the form of an array. We can see from the array that the weight significantly decreases for the third and fourth preferance.
+It is set like that because we want maximum students to get either their first or second 
+preferance.  Depending on the parameters that we set the, function assigns appropriate weights 
+to all rows andcolumns which corresponds to students and committees respectively.
+
+The average outdegree is calculated to identify the edges with more potential to do load 
+balencing and increase their weights accordingly so that the likelihood of them being in the 
+final assignment increases.  The edges are then divided in two groups depending on the average 
+outdegree and appropriate weights are assigned to them to complete the matrix.
+
+Copyright and License
+=====================
+
+This software is released under a BSD license, adapted from
+<http://opensource.org/licenses/bsd-license.php>
+
+Copyright (c) 2015 Rathijeet Bhave
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+"""
+
+__docformat__ = 'restructuredtext'
+
+#------------------------------------------------------------------------------------------
+# Info about the module
+
+__author__    = "Rathijeet Bhave, rathijeetbhave@gmail.com"
+__copyright__ = "(c) 2008 Rathijeet Bhave"
+__license__   = "BSD-style license"
+
+#------------------------------------------------------------------------------------------
+
 import csv
 import itertools
 import sys
@@ -113,14 +186,16 @@ def some_name(alpha,max_count,gamma):
                     for i in range(1,len(pref_graph)+1):
                         if row[i] == aoe :
                             if (row[0],aoe) in list_alpha:                          
-                                if  matrix[int(row[0])-1][(int(comm)-1)*max_count] < test_graph*pref_graph[i-1]*alf*(len(aoe_comm_list[index_in_comm_list])-1):
+                                weight = test_graph*pref_graph[i-1]*alf*(len(aoe_comm_list[index_in_comm_list])-1)
+                                if matrix[int(row[0])-1][(int(comm)-1)*max_count] < weight :
                                     for j in range(max_count):
-                                        matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = test_graph*pref_graph[i-1]*alf*(len(aoe_comm_list[index_in_comm_list])-1)
+                                        matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = weight
                                 break
                             elif (row[0],aoe) in list_one_minus_alpha:                          
-                                if matrix[int(row[0])-1][(int(comm)-1)*max_count] < test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1):
+                                weight = test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1)
+                                if matrix[int(row[0])-1][(int(comm)-1)*max_count] < weight :
                                     for j in range(max_count):
-                                        matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = test_graph*pref_graph[i-1]*(10-alf)*(len(aoe_comm_list[index_in_comm_list])-1)
+                                        matrix[int(row[0])-1][(int(comm)-1)*max_count + j] = weight
                                 break
             except TypeError,e:
                 #print str(e)

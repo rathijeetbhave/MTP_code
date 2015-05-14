@@ -1,3 +1,75 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-1 -*-
+
+# Documentation is intended to be processed by Epydoc.
+
+"""
+Introduction
+============
+
+This file is used to test the munkres algorithm. A call is made to the file make_matrix.py 
+which performs the operation of making the input matrix to the algorithm. It is also used to 
+print the output in readable form onto the screen.
+
+Description
+===========
+
+Firstly a student class is created to store all the required information about the students.
+
+The munkres_test function first makes a call to *some_name* function in make_matrix.py file.
+It returns the input matrix in form of list of lists. Now by default munkres.py file minimises 
+the total cost, but in our case we want to maximise the total cost. So another matrix called 
+cost_matrix is made as input. The **indexes** contains the tuples of (row,column) in which 
+assignments are made. These are then used to find the unassigned students and the unwanted 
+assignments. Unwanted assignments means those students who have got their 3rd or worse choice.
+It prints all this information in readable format on the screen.  All the information about the 
+students along eith their assignments is stored in final_allotment.csv file.
+
+Copyright and License
+=====================
+
+This software is released under a BSD license, adapted from
+<http://opensource.org/licenses/bsd-license.php>
+
+Copyright (c) 2015 Rathijeet Bhave
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+"""
+
+__docformat__ = 'restructuredtext'
+
+#------------------------------------------------------------------------------------------
+# Info about the module
+
+__author__    = "Rathijeet Bhave, rathijeetbhave@gmail.com"
+__copyright__ = "(c) 2008 Rathijeet Bhave"
+__license__   = "BSD-style license"
+
+#------------------------------------------------------------------------------------------
+
 from munkres import Munkres,print_matrix
 import make_matrix
 import sys
